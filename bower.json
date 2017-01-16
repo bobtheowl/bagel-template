@@ -1,0 +1,24 @@
+{
+  "name": "bagel-template",
+  "version": "0.1",
+  "homepage": "https://github.com/bobtheowl/bagel-template",
+  "authors": [
+    "Jacob Stair <jstair@omnispear.com>"
+  ],
+  "description": "Lightweight Javascript templates for HTML elements",
+  "main": "dist/bagel-template.js",
+  "keywords": [
+    "bagel",
+    "template"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "src",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "README.md"
+  ]
+}
