@@ -3,7 +3,9 @@ Lightweight Javascript templates for HTML elements
 
 ## Installation
 
+Bagel Template can be installed with Bower:
 
+`bower install bagel-template`
 
 ## Basic Usage
 
@@ -105,3 +107,29 @@ Receiving data from the back-end in not quite the right format? Set modifiers on
     <div class="some-class" data-some-attr="some uppercase content">
         <span>Content of the div</span>
     </div>
+
+## Advanced Usage
+
+### Dot Notation in Placeholders
+
+Sometimes you receive data that comes from something like Eloquent, which contains relationships nested in the object. To handle these cases, Bagel Templates support using dot notation.
+
+Let's say your data looks like this:
+
+    var data = {
+        title: 'Some Title',
+        body: 'Some body text.',
+        author: {
+            name: 'Jacob Stair'
+        }
+    };
+
+You can display the author's name by using this placeholder:
+
+    <script type="text/x-template" id="some-template">
+        <div class="post">
+            <h3 class="post-title">{title}</h3>
+            <div class="author-name">{author.name}</div>
+            <div class="body-text">{body}</div>
+        </div>
+    </script>
