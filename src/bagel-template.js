@@ -13,6 +13,26 @@ var BagelTemplate;
 
     // Private global methods
 
+    /**
+     * Goes through each value and if it is null and doesn't have an assigned
+     * modifier, the value is set to an empty string.
+     * @param {object} fixObject Object of values to check
+     * @return {object}
+     */
+    function fixNullValues(fixObject) {
+        Object.keys(fixObject).map(function(key, index) {
+            if (fixObject[key] === null && typeof this.options.modifiers[key] === 'undefined') {
+                fixObject[key] = '';
+            }//end if
+        });
+        return fixObject;
+    }
+
+    /**
+     * Merges two Javascript objects together.
+     * @param {object}* Each argument is an object to be merged.
+     * @return {object}
+     */
     function mergeObjects() {
         var args = Array.prototype.slice.call(arguments),
             merged = {},
@@ -27,6 +47,11 @@ var BagelTemplate;
         return merged;
     }
 
+    /**
+     * Creates an object of default values to be merged with the values object.
+     * @param {object} options
+     * @return {object}
+     */
     function createOptionalObject(options) {
         var optionalObj = {};
 
@@ -38,9 +63,12 @@ var BagelTemplate;
     }
 
     /**
-     * @summary
-     * @param
-     * @retval
+     * @summary Loops through the values object and replaces placeholders as needed.
+     * @param {object} templateObj The current BagelTemplate instance
+     * @param {string} returnStr The current template string being worked on
+     * @param {string} prefix The current object key prefix
+     * @param {object} values An object containing values to replace
+     * @return {string}
      */
     function loopThroughValues(templateObj, returnStr, prefix, values) {
         var openDelimiter = templateObj.options.delimiters[0],
@@ -93,13 +121,13 @@ var BagelTemplate;
 
     /**
      * @summary Fills in template with values and returns produced string.
-     * @param object values Object containing values to replace placeholders with
-     * @retval string
+     * @param {object} values Object containing values to replace placeholders with
+     * @return {string}
      */
     BagelTemplate.prototype.make = function (values) {
         var returnStr = (this.template + ''),
             optionalObj = createOptionalObject(this.options),
-            values = mergeObjects(optionalObj, values),
+            values = fixNullValues(mergeObjects(optionalObj, values)),
             openDelimiter = this.options.delimiters[0],
             closeDelimiter = this.options.delimiters[1],
             key;
@@ -119,7 +147,6 @@ var BagelTemplate;
 
         return returnStr;
     };//end BagelTemplate.make()
-
 }());
 
 //end bagel-template.js
