@@ -17,11 +17,12 @@ var BagelTemplate;
      * Goes through each value and if it is null and doesn't have an assigned
      * modifier, the value is set to an empty string.
      * @param {object} fixObject Object of values to check
+     * @param {object} modifiers Object of modifiers to check
      * @return {object}
      */
-    function fixNullValues(fixObject) {
+    function fixNullValues(fixObject, modifiers) {
         Object.keys(fixObject).map(function(key, index) {
-            if (fixObject[key] === null && typeof this.options.modifiers[key] === 'undefined') {
+            if (fixObject[key] === null && typeof modifiers[key] === 'undefined') {
                 fixObject[key] = '';
             }//end if
         });
@@ -127,7 +128,7 @@ var BagelTemplate;
     BagelTemplate.prototype.make = function (values) {
         var returnStr = (this.template + ''),
             optionalObj = createOptionalObject(this.options),
-            values = fixNullValues(mergeObjects(optionalObj, values)),
+            values = fixNullValues(mergeObjects(optionalObj, values), this.options.modifiers),
             openDelimiter = this.options.delimiters[0],
             closeDelimiter = this.options.delimiters[1],
             key;
